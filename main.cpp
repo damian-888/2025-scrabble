@@ -1,3 +1,4 @@
+#include <cctype>
 #include <iostream>
 #include <limits.h>
 #include <ostream>
@@ -17,19 +18,26 @@ int compute_scores(string player) {
   int score = 0;
   
   //Find value player
-  //For every char in player player
+  //For every char in player
   for(char c : player) {
-    //loop through alpha and find index
+    //loop through alpha (until end) with i 
+    if(isupper(c)) {
+      c = tolower(c);
+    }
+
+    if(!isalpha(c)) {
+      score = 0;
+      break;
+    }
+
     for(int i = 0; i < alpha.size(); i++) {
       //if the char == value at alpha index
+
       if(c == alpha[i]) {
-        //0 = 0 + whatever is at the same index as alhpa index
         score += scores[i];
-        //cout << alpha[i] << " " << scores[i] << " " << score << endl;
       }
     }
   }
-
   return score;
 }
 
@@ -43,7 +51,6 @@ int main() {
     cin >> player_2;
 
     //Will input a number as a string and player will theoretically pass. Check/ validate type
-
     if (cin.fail()) {
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -64,15 +71,17 @@ int main() {
   //else Tie!
   if(p1_score > p2_score) {
     cout << "Player 1 wins!\n";
+    //cout << "p1: " << p1_score << " || " << "p2: " << p2_score << endl;
   } else if(p1_score < p2_score) {
+    //cout << "p1: " << p1_score << " || " << "p2: " << p2_score << endl;
     cout << "Player 2 wins!\n";
   } else if(p1_score == p2_score){
+    //cout << "p1: " << p1_score << " || " << "p2: " << p2_score << endl;
     cout << "Tie!\n";
   } else {
+    //cout << "p1: " << p1_score << " || " << "p2: " << p2_score << endl;
     cout << "Error\n";
   }
  
-  cout << winner_msg << endl;
-
   return 0;
 }
